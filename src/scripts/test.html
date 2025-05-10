@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <section class="story-detail-container">
+    <div class="story-upload">
+      <div class="story-upload__media">
+        <video id="camera-video" class="story-upload__camera__video">
+          Video stream not available.
+        </video>
+        <canvas class="story-upload__camera-preview" id="camera-canvas"></canvas>
+      </div>
+      <form id="story-upload-form" class="story-upload__form">
+        <div class="story-upload__form-group">
+          <label for="description" class="story-upload__label">Deskripsi:</label>
+          <textarea id="description" name="description" class="story-upload__input story-upload__input--textarea"
+            required></textarea>
+        </div>
+        <div class="story-upload__form-group">
+          <label for="date" class="story-upload__label">Tanggal:</label>
+          <input type="date" id="date" name="date" class="story-upload__input" required>
+        </div>
+        <div class="story-upload__actions">
+          <button class="story-upload__action-button" id="take-picture-button">Take Picture</button>
+          <button class="story-upload__action-button" id="get-location-button">Get Location</button>
+          <button class="story-upload__action-button" id="upload-button">Upload</button>
+        </div>
+      </form>
+      <section class="story-upload__details">
+        <p id="date-text" class="story-upload__date"></p>
+        <div id="map-container" class="story-upload__map-container">
+          <div class="story-upload__map-preview"></div>
+          <div id="map-loading-container"></div>
+        </div>
+      </section>
+    </div>
+
+  </section>
+</body>
+
+</html>
