@@ -12,6 +12,7 @@ export default class NewPage {
   #isCameraOpen = false;
   #takenDocumentations = [];
   #map = null;
+  #routeChangeListener;
 
   async render() {
     return `
@@ -117,6 +118,8 @@ export default class NewPage {
 
     this.#presenter.showNewFormMap();
     this.#setupForm();
+    this.#setupPageBlur()
+    this.#setupRouteChangeListener()
   }
 
   #setupForm() {
@@ -164,6 +167,19 @@ export default class NewPage {
         event.currentTarget.textContent = 'Buka Kamera';
         this.#camera.stop();
       });
+  }
+
+  #setupPageBlur() {
+    window.addEventListener('blur', () => {
+      if (this.#isCameraOpen && this.#camera) {
+        this.#camera.stop();
+        this.#isCameraOpen = false;
+        const cameraButton = document.getElementById('open-documentations-camera-button');
+        if (cameraButton) {
+          cameraButton.textContent = 'Buka Kamera';
+        }
+      }
+    });
   }
 
   async initialMap() {
@@ -314,5 +330,35 @@ export default class NewPage {
     document.getElementById('submit-button-container').innerHTML = `
       <button class="btn" type="submit">Buat Laporan</button>
     `;
+  }
+
+  #setupRouteChangeListener() {
+    // Bersihkan listener yang ada sebelum menambahkan yang baru
+    if (this.#routeChangeListener) {
+      window.removeEventListener('hashchange', this.#routeChangeListener);
+    }
+
+    // Definisikan listener sebagai properti kelas
+    this.#routeChangeListener = () => {
+      if (this.#isCameraOpen && this.#camera) {
+        this.#camera.stop();
+        this.#isCameraOpen = false;
+        const cameraButton = document.getElementById('open-documentations-camera-button');
+        if (cameraButton) {
+          cameraButton.textContent = 'Buka Kamera';
+        }
+      }
+    };
+
+    // Tambahkan listener untuk event hashchange (atau event perubahan rute lainnya)
+    window.addEventListener('hashchange', this.#routeChangeListener);
+  }
+  
+  destroy() {
+    // Hapus listener saat komponen dihancurkan
+    if (this.#routeChangeListener) {
+      window.removeEventListener('hashchange', this.#routeChangeListener);
+      this.#routeChangeListener = null; //penting untuk garbage collection
+    }
   }
 }
