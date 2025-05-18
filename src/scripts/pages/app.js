@@ -6,16 +6,23 @@ class App {
   #content = null;
   #drawerButton = null;
   #navigationDrawer = null;
+  #skipLinkButton = null;
 
-  constructor({ navigationDrawer, drawerButton, content }) {
+  constructor({ navigationDrawer, drawerButton, content, skipLinkButton }) {
     this.#content = content;
     this.#drawerButton = drawerButton;
     this.#navigationDrawer = navigationDrawer;
+    this.#skipLinkButton = skipLinkButton;
 
-    this._setupDrawer();
+    this.#init();
   }
 
-  _setupDrawer() {
+  #init() {
+    setupSkipToContent(this.#skipLinkButton, this.#content);
+    this.#setupDrawer();
+  }
+
+  #setupDrawer() {
     this.#drawerButton.addEventListener('click', () => {
       this.#navigationDrawer.classList.toggle('open');
     });
