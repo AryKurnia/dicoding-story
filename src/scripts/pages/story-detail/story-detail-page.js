@@ -1,8 +1,11 @@
 import {
   generateLoaderAbsoluteTemplate,
   generateStoryDetailTemplate,
+  generateSaveStoryButtonTemplate,
+  generateRemoveStoryButtonTemplate,
 } from '../../templates';
 import * as DicodingStoryAPI from '../../data/api';
+import Database from '../../data/database';
 import Map from '../../utils/map';
 import { parseActivePathname } from '../../routes/url-parser';
 import StoryDetailPresenter from './story-detail-presenter';
@@ -24,6 +27,7 @@ export default class StoryDetailPage {
     this.#presenter = new StoryDetailPresenter(parseActivePathname().id, {
       model: DicodingStoryAPI,
       view: this,
+      dbModel: Database,
     });
 
     await this.#presenter.getStoryDetail();
@@ -50,6 +54,8 @@ export default class StoryDetailPage {
       this.#map.changeCamera(reportCoordinate);     
       this.#map.addMarker(reportCoordinate, markerOptions, popupOptions);
     }
+
+    this.#presenter.showSaveButton();
   }
 
   async initialMap() {
@@ -74,5 +80,39 @@ export default class StoryDetailPage {
 
   hideLoading() {
     document.getElementById('story-detail-loading-container').innerHTML = '';
-  }    
+  }
+
+  renderSaveButton() {
+    document.getElementById('save-actions-container').innerHTML = generateSaveStoryButtonTemplate();
+
+    document.getElementById('story-detail-save').addEventListener('click', async () => {
+      await this.#presenter.saveStory();
+      await this.#presenter.showSaveButton();
+    });
+  }
+
+  saveToBookmarkSuccessfully(message) {
+    console.log(message);
+  }
+
+  saveToBookmarkFailed(message) {
+    alert(message);
+  }
+
+  removeFromBookmarkSuccessfully(message) {
+    console.log(message);
+  }
+  
+  removeFromBookmarkFailed(message) {
+    alert(message);
+  }
+
+  renderRemoveButton() {
+    document.getElementById('save-actions-container').innerHTML = generateRemoveStoryButtonTemplate();
+
+    document.getElementById('story-detail-remuve').addEventListener('click', async () => {
+      await this.#presenter.removeStory();
+      await this.#presenter.showSaveButton();
+    });
+  }
 }

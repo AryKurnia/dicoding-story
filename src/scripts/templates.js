@@ -15,8 +15,8 @@ export function generateLoaderAbsoluteTemplate() {
 export function generateStoriesListEmptyTemplate() {
   return `
     <div id="stories-list-empty" class="stories-list__empty">
-      <h2>Tidak ada laporan yang tersedia</h2>
-      <p>Saat ini, tidak ada laporan kerusakan fasilitas umum yang dapat ditampilkan.</p>
+      <h2>Tidak ada story yang tersedia</h2>
+      <p>Saat ini, tidak ada story kerusakan fasilitas umum yang dapat ditampilkan.</p>
     </div>
   `;
 }
@@ -24,7 +24,7 @@ export function generateStoriesListEmptyTemplate() {
 export function generateStoriesListErrorTemplate(message) {
   return `
     <div id="stories-list-error" class="stories-list__error">
-      <h2>Terjadi kesalahan pengambilan daftar laporan</h2>
+      <h2>Terjadi kesalahan pengambilan daftar story</h2>
       <p>${message ? message : 'Gunakan jaringan lain atau laporkan error ini.'}</p>
     </div>
   `;
@@ -72,10 +72,43 @@ export function generateStoryDetailTemplate({
           <p id="story-description" class="story-detail__description">${description}</p>
       </div>
         <p id="story-date" class="story-detail__date">${showFormattedDate(createdAt, 'id-ID')}</p>
+        <div id="save-actions-container"></div>
       <div id="story-detail-map-location" class="story-detail__map-location">
           <p>Latitude: ${lat}, Longitude: ${lon}</p>
           <div id="map-loading-container"></div>
       </div>
     </div>
+  `;
+}
+
+export function generateSubscribeButtonTemplate() {
+  return `
+    <button id="subscribe-button" class="btn subscribe-button">
+      Subscribe <i class="fas fa-bell"></i>
+    </button>
+  `;
+}
+
+export function generateUnsubscribeButtonTemplate() {
+  return `
+    <button id="unsubscribe-button" class="btn unsubscribe-button">
+      Unsubscribe <i class="fas fa-bell-slash"></i>
+    </button>
+  `;
+}
+
+export function generateSaveStoryButtonTemplate() {
+  return `
+    <button id="story-detail-save" class="btn save-story-button">
+      Simpan Story <i class="fas fa-save"></i>
+    </button>
+  `;
+}
+
+export function generateRemoveStoryButtonTemplate() {
+  return `
+    <button id="story-detail-remuve" class="btn remuve-story-button">
+      Remuve <i class="fas fa-remuve"></i>
+    </button>
   `;
 }
